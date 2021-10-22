@@ -11,6 +11,8 @@ from dm_control import manipulation, suite
 from dm_control.suite.wrappers import action_scale, pixels
 from dm_env import StepType, specs
 
+from gym_utils.bullet_envs import create_bullet_env
+
 
 class ExtendedTimeStep(NamedTuple):
     step_type: Any
@@ -177,7 +179,7 @@ class ExtendedTimeStepWrapper(dm_env.Environment):
         return getattr(self._env, name)
 
 
-def make(name, frame_stack, action_repeat, seed):
+def make_dmc(name, frame_stack, action_repeat, seed):
     domain, task = name.split('_', 1)
     # overwrite cup to ball_in_cup
     domain = dict(cup='ball_in_cup').get(domain, domain)
@@ -208,3 +210,22 @@ def make(name, frame_stack, action_repeat, seed):
     env = FrameStackWrapper(env, frame_stack, pixels_key)
     env = ExtendedTimeStepWrapper(env)
     return env
+
+def make_bullet(name, frame_stack, action_repeat, seed):
+    env = create_bullet_env(task=name)
+    pixels_key = 'observation'
+    # add wrappers
+    env = ActionDTypeWrapper(env, np.float32)
+    env = ActionRepeatWrapper(env, action_repeat)
+    env = action_scale.Wrapper(env, minimum=-1.0, maximum=+1.0)
+    # stack several frames
+    env = FrameStackWrapper(env, frame_stack, pixels_key)
+    env = ExtendedTimeStepWrapper(env)
+    return env
+
+def make(name, frame_stack, action_repeat, seed, dmc_env=True):
+    if dmc_env:
+        return make_dmc(name, frame_stack, action_repeat, seed)
+    else:
+        return make_bullet(name, frame_stack, action_repeat, seed)
+    
