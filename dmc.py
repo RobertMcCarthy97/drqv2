@@ -7,8 +7,8 @@ from typing import Any, NamedTuple
 
 import dm_env
 import numpy as np
-from dm_control import manipulation, suite
-from dm_control.suite.wrappers import action_scale, pixels
+# from dm_control import manipulation, suite
+# from dm_control.suite.wrappers import action_scale, pixels
 from dm_env import StepType, specs
 
 from gym_utils.bullet_envs import create_bullet_env
@@ -180,6 +180,9 @@ class ExtendedTimeStepWrapper(dm_env.Environment):
 
 
 def make_dmc(name, frame_stack, action_repeat, seed):
+    from dm_control import manipulation, suite
+    from dm_control.suite.wrappers import action_scale, pixels
+    
     domain, task = name.split('_', 1)
     # overwrite cup to ball_in_cup
     domain = dict(cup='ball_in_cup').get(domain, domain)
@@ -212,6 +215,8 @@ def make_dmc(name, frame_stack, action_repeat, seed):
     return env
 
 def make_bullet(name, frame_stack, action_repeat, seed):
+    from gym.utils import dummy_action_scale as action_scale
+    
     env = create_bullet_env(task=name)
     pixels_key = 'observation'
     # add wrappers
