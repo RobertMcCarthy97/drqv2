@@ -53,9 +53,9 @@ class Workspace:
         self.logger = Logger(self.work_dir, use_tb=self.cfg.use_tb)
         # create envs
         self.train_env = dmc.make(self.cfg.task_name, self.cfg.frame_stack,
-                                  self.cfg.action_repeat, self.cfg.seed)
+                                  self.cfg.action_repeat, self.cfg.seed, self.cfg.dmc_env)
         self.eval_env = dmc.make(self.cfg.task_name, self.cfg.frame_stack,
-                                 self.cfg.action_repeat, self.cfg.seed)
+                                 self.cfg.action_repeat, self.cfg.seed, self.cfg.dmc_env)
         # create replay buffer
         data_specs = (self.train_env.observation_spec(),
                       self.train_env.action_spec(),
@@ -102,9 +102,7 @@ class Workspace:
         while eval_until_episode(episode):
             print('evaluating')
             time_step = self.eval_env.reset()
-            print(time_step)
             print(time_step.observation.shape)
-            input()
             self.video_recorder.init(self.eval_env, enabled=(episode == 0))
             while not time_step.last():
                 with torch.no_grad(), utils.eval_mode(self.agent):

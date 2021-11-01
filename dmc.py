@@ -215,7 +215,7 @@ def make_dmc(name, frame_stack, action_repeat, seed):
     return env
 
 def make_bullet(name, frame_stack, action_repeat, seed):
-    from gym.utils import dummy_action_scale as action_scale
+    import gym_utils.dummy_action_scale as action_scale
     
     env = create_bullet_env(task=name)
     pixels_key = 'observation'

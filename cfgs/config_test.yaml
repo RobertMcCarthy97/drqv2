@@ -1,7 +1,8 @@
 defaults:
   - _self_
   - task@_global_: quadruped_walk
-  - override hydra/launcher: submitit_local
+  # - override hydra/launcher: submitit_local
+  - override hydra/launcher: submitit_slurm
 
 dmc_env: False
 # task settings
@@ -14,7 +15,7 @@ num_seed_frames: 4000
 eval_every_frames: 10000
 num_eval_episodes: 1
 # snapshot
-save_snapshot: false
+save_snapshot: true
 # replay buffer
 replay_buffer_size: 1000000
 replay_buffer_num_workers: 1

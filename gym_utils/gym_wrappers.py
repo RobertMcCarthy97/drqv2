@@ -188,3 +188,6 @@ class DMEnvFromGym(dm_env.Environment):
 
   def action_spec(self):
     return self._action_spec
+
+  def render(self):
+        pass
