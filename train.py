@@ -26,6 +26,7 @@ torch.backends.cudnn.benchmark = True
 
 
 def make_agent(obs_spec, action_spec, cfg):
+    print('obs_spec: {}'.format(obs_spec.shape))
     cfg.obs_shape = obs_spec.shape
     cfg.action_shape = action_spec.shape
     return hydra.utils.instantiate(cfg)

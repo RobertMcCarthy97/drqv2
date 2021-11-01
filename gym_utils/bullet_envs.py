@@ -11,8 +11,8 @@ def create_bullet_env(task='reach'):
             'cameraEyePosition': [-1.0, 0.25, 0.6],
             'cameraTargetPosition': [-0.6, 0.05, 0.2],
             'cameraUpVector': [0, 0, 1],
-            'render_width': 128,
-            'render_height': 128
+            'render_width': 84,
+            'render_height': 84
         }
     ]
     
