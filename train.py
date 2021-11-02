@@ -101,9 +101,7 @@ class Workspace:
         eval_until_episode = utils.Until(self.cfg.num_eval_episodes)
 
         while eval_until_episode(episode):
-            print('evaluating')
             time_step = self.eval_env.reset()
-            print(time_step.observation.shape)
             self.video_recorder.init(self.eval_env, enabled=(episode == 0))
             while not time_step.last():
                 with torch.no_grad(), utils.eval_mode(self.agent):
@@ -158,7 +156,6 @@ class Workspace:
                         log('step', self.global_step)
 
                 # reset env
-                print('reset train env')
                 time_step = self.train_env.reset()
                 self.replay_storage.add(time_step)
                 self.train_video_recorder.init(time_step.observation)
@@ -208,9 +205,9 @@ class Workspace:
             self.__dict__[k] = v
 
 
-print('using test hyperparameters')
+print('using bullet hyperparameters')
 # @hydra.main(config_path='cfgs', config_name='config')
-@hydra.main(config_path='cfgs', config_name='config_test')
+@hydra.main(config_path='cfgs', config_name='config_bullet')
 def main(cfg):
     from train import Workspace as W
     root_dir = Path.cwd()

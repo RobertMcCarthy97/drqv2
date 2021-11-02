@@ -63,7 +63,6 @@ class Encoder(nn.Module):
     def forward(self, obs):
         obs = obs / 255.0 - 0.5
         h = self.convnet(obs)
-        print('encoder conv output: {}'.format(h.shape))
         h = h.view(h.shape[0], -1)
         return h
 
@@ -164,9 +163,7 @@ class DrQV2Agent:
 
     def act(self, obs, step, eval_mode):
         obs = torch.as_tensor(obs, device=self.device)
-        print('obs: {}'.format(obs.shape))
         obs = self.encoder(obs.unsqueeze(0))
-        print('encoded obs: {}'.format(obs.shape))
         stddev = utils.schedule(self.stddev_schedule, step)
         dist = self.actor(obs, stddev)
         if eval_mode:
