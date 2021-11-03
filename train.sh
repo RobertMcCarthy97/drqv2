@@ -20,6 +20,7 @@
 # run from current directory
 cd $SLURM_SUBMIT_DIR
 
+module load anaconda
 source activate drqv2
 
 # command to use
