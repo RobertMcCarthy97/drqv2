@@ -8,7 +8,7 @@
 # Request 2 gpus
 #SBATCH --gres=gpu:1
 # specify number of tasks/cores per node required
-#SBATCH --ntasks-per-node=30
+#SBATCH --ntasks-per-node=16
 
 # specify the walltime e.g 20 mins
 #SBATCH -t 20:20:00
