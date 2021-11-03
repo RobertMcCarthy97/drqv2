@@ -24,7 +24,7 @@ def create_bullet_env(task='reach'):
         num_block=4,  # only meaningful for multi-block tasks
         render=False,
         binary_reward=False,
-        max_episode_steps=5,
+        max_episode_steps=50,
         # image observation args
         image_observation=True,
         depth_image=False,

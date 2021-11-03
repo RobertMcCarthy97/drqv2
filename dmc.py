@@ -179,7 +179,7 @@ class ExtendedTimeStepWrapper(dm_env.Environment):
         return getattr(self._env, name)
 
 
-def make_dmc(name, frame_stack, action_repeat, seed):
+def _make_dmc(name, frame_stack, action_repeat, seed):
     from dm_control import manipulation, suite
     from dm_control.suite.wrappers import action_scale, pixels
     
@@ -214,7 +214,7 @@ def make_dmc(name, frame_stack, action_repeat, seed):
     env = ExtendedTimeStepWrapper(env)
     return env
 
-def make_bullet(name, frame_stack, action_repeat, seed):
+def _make_bullet(name, frame_stack, action_repeat, seed):
     import gym_utils.dummy_action_scale as action_scale
     
     env = create_bullet_env(task=name)
@@ -230,7 +230,7 @@ def make_bullet(name, frame_stack, action_repeat, seed):
 
 def make(name, frame_stack, action_repeat, seed, dmc_env=True):
     if dmc_env:
-        return make_dmc(name, frame_stack, action_repeat, seed)
+        return _make_dmc(name, frame_stack, action_repeat, seed)
     else:
-        return make_bullet(name, frame_stack, action_repeat, seed)
+        return _make_bullet(name, frame_stack, action_repeat, seed)
     
