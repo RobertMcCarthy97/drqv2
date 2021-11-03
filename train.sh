@@ -1,5 +1,5 @@
 #!/bin/bash -l
-#SBATCH --job-name=drqPush
+#SBATCH --job-name=drqReach
 # speficity number of nodes 
 #SBATCH -N 1
 # specify the gpu queue
@@ -11,7 +11,7 @@
 #SBATCH --ntasks-per-node=16
 
 # specify the walltime e.g 20 mins
-#SBATCH -t 20:20:00
+#SBATCH -t 10:20:00
 
 # set to email at start,end and failed jobs
 #SBATCH --mail-type=ALL
@@ -24,6 +24,6 @@ module load anaconda
 source activate drqv2
 
 # command to use
-python3 train.py task=push
+python3 train.py task=reach
 
 # sbatch --partition=gpu train.sh
